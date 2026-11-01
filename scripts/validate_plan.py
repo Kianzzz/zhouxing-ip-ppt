@@ -63,6 +63,9 @@ def validate(p):
                 if rb and (rb[0]<left or rb[1]<top or rb[0]+rb[2]>right+0.5 or rb[1]+rb[3]>bottom+0.5):error(where+': protected region is cropped')
         chars=s.get('characters');texts=s.get('text_boxes');ids=set();tb=[]
         if not isinstance(chars,list):error(label+': characters must be array');chars=[]
+        if s.get('page_role')=='cover':
+            if s.get('visual_priority')!='text-led':error(label+': cover must be text-led')
+            if not chars:error(label+': cover needs a supporting character interacting with the topic')
         for c in chars:
             if not isinstance(c,dict):error(label+': character must be object');continue
             cid=c.get('id');count=c.get('subject_count')
