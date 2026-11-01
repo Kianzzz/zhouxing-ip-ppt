@@ -14,21 +14,21 @@
   },
   "style_reference": {
     "path": "default-style-reference.png",
-    "sha256": "712c79e1e89920766e7b8ab0cb1f0a8ad674a706b62f80f8479613d03492cb4c",
-    "origin": "AI-generated original cobalt-blue editorial illustration",
+    "sha256": "bcb42e9360adf999c2c742f2bcb786b7adb39ef1fc2971a1858ef4dd35fca420",
+    "origin": "AI-generated cobalt-blue editorial office reference for task-driven collaboration",
     "approval_status": "candidate",
     "use_for": [
       "shape simplification",
       "linework",
       "face style",
-      "flat rendering",
-      "detail density"
+      "flat color organization",
+      "detail density",
+      "task interaction and furniture support guidance"
     ],
     "do_not_copy": [
-      "long tabletop boundary",
-      "miniature scenery base",
-      "cropped-body placement",
-      "composition"
+      "the whole composition or fixed object placements",
+      "an office setting for every supplied character",
+      "reference colors over the project palette"
     ]
   },
   "scope": "Built-in blue is a no-input candidate only. Explicit instructions and supplied visual color relationships guide project colors; coordinate them with preserved character colors. Learn color roles, area hierarchy, saturation, temperature and page rhythm. Authentic screenshots retain original colors.",
