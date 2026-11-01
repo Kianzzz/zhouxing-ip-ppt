@@ -10,7 +10,9 @@
     "background": "#FFFFFF",
     "title": "#151A23",
     "body": "#454B54",
-    "muted": "#667085"
+    "muted": "#667085",
+    "neutral_warm": "#F4F0E8",
+    "neutral_gray": "#E9E6E0"
   },
   "style_reference": {
     "path": "default-style-reference.png",
@@ -43,7 +45,8 @@
     "source": "role-based palette derived from the designated reference or character; not restricted to one hue",
     "native_colors": "assign background, environment, text and accent roles with controlled area and contrast",
     "preserve": "original character and screenshot colors",
-    "avoid": "copying identity-board annotations, skin or every minor detail color; forcing all new props to one hue"
+    "avoid": "copying identity-board annotations, skin or every minor detail color; forcing all new props to one hue",
+    "background_selection": "Choose independently from character clothing: default to a contrasting neutral or justified different hue for blue characters, not a saturated blue background. Blue can remain a title/accent. Reference or explicit same-hue designs require visible value/saturation separation."
   },
   "typography": {
     "font_groups": "font-groups.json",

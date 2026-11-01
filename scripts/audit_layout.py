@@ -3,6 +3,18 @@
 import argparse,json,math
 from pathlib import Path
 
+def union_area(rects):
+    """Union of clipped image ink boxes; gaps and overlaps are not counted twice."""
+    xs=sorted({x for r in rects for x in (r[0],r[2])});area=0
+    for left,right in zip(xs,xs[1:]):
+        intervals=sorted((r[1],r[3]) for r in rects if r[0]<right and r[2]>left)
+        end=None;covered=0
+        for top,bottom in intervals:
+            covered+=max(0,bottom-max(top,end if end is not None else top))
+            end=bottom if end is None else max(end,bottom)
+        area+=(right-left)*covered
+    return area
+
 def audit(doc):
     errors=[];warnings=[];measurements=[]
     tokens=doc.get('spacing_system',{})
@@ -52,6 +64,18 @@ def audit(doc):
                     if 'token'in c:
                         target=tokens[c['token']];ok=abs(value-target)<=tol
                     else:ok=c['min']<=value<=c['max']
+                elif kind=='generated_visual_coverage':
+                    if basis!='ink':raise ValueError('generated coverage requires measured ink bounds')
+                    ids=c['ids']
+                    if not isinstance(ids,list) or not ids or len(set(ids))!=len(ids):raise ValueError('list distinct generated image object IDs')
+                    rects=[]
+                    for oid in ids:
+                        if oid not in objects or objects[oid].get('type')!='image':raise ValueError('coverage IDs must be actual image objects')
+                        x,y,w,h=bound([oid],'ink')
+                        if w<0 or h<0:raise ValueError('negative ink dimensions')
+                        left,top,right,bottom=max(0,x),max(0,y),min(960,x+w),min(540,y+h)
+                        if right>left and bottom>top:rects.append((left,top,right,bottom))
+                    value=union_area(rects)/(960*540);ok=value+1e-12>=1/3
                 else:raise ValueError('Unknown constraint kind')
                 item={'slide':si,'id':c.get('id'),'value':round(value,2),'basis':basis,'passed':ok};measurements.append(item)
                 if not ok:
