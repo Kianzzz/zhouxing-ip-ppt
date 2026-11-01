@@ -16,7 +16,20 @@
     "path": "default-style-reference.png",
     "sha256": "712c79e1e89920766e7b8ab0cb1f0a8ad674a706b62f80f8479613d03492cb4c",
     "origin": "AI-generated original cobalt-blue editorial illustration",
-    "approval_status": "candidate"
+    "approval_status": "candidate",
+    "use_for": [
+      "shape simplification",
+      "linework",
+      "face style",
+      "flat rendering",
+      "detail density"
+    ],
+    "do_not_copy": [
+      "long tabletop boundary",
+      "miniature scenery base",
+      "cropped-body placement",
+      "composition"
+    ]
   },
   "scope": "Built-in blue is a no-input candidate only. Explicit instructions and supplied visual color relationships guide project colors; coordinate them with preserved character colors. Learn color roles, area hierarchy, saturation, temperature and page rhythm. Authentic screenshots retain original colors.",
   "selection_priority": [
