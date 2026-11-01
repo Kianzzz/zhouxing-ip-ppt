@@ -1,11 +1,32 @@
 #!/usr/bin/env python3
 """Audit palette provenance and evidence/device insertion; no aesthetic scoring."""
 import argparse
+import colorsys
 import hashlib
 import json
 import math
 import re
 from pathlib import Path
+
+
+def hex_color(value):
+    return isinstance(value, str) and re.fullmatch(r'#[0-9a-fA-F]{6}', value) is not None
+
+
+def neutral_or_primary(color, primary):
+    """Conservative hue guard, not a judgment of color harmony or prominence."""
+    rgb = tuple(int(color[i:i+2], 16) / 255 for i in (1, 3, 5))
+    if max(rgb) - min(rgb) <= 24 / 255:
+        return True
+    hue = colorsys.rgb_to_hsv(*rgb)[0]
+    for base in primary:
+        brgb = tuple(int(base[i:i+2], 16) / 255 for i in (1, 3, 5))
+        if max(brgb) - min(brgb) <= 24 / 255:
+            continue
+        difference = abs(hue - colorsys.rgb_to_hsv(*brgb)[0])
+        if min(difference, 1 - difference) <= 15 / 360:
+            return True
+    return False
 
 
 def audit(plan, base, stage='plan', readback=None):
@@ -28,6 +49,7 @@ def audit(plan, base, stage='plan', readback=None):
     if not isinstance(plan, dict):
         return {'errors': ['plan must be an object'], 'warnings': []}
     palette = plan.get('palette_contract')
+    declared_native = set()
     if not isinstance(palette, dict):
         fail('palette', 'missing palette_contract')
     else:
@@ -49,7 +71,7 @@ def audit(plan, base, stage='plan', readback=None):
                 fail('palette', 'missing ' + key)
         roles = palette.get('roles', {})
         if not isinstance(roles, dict): roles = {}
-        for key in ('background', 'environment', 'text', 'accent'):
+        for key in ('primary', 'background', 'environment', 'text', 'accent'):
             role = roles.get(key)
             if not isinstance(role, dict):
                 fail('palette', 'missing role ' + key); continue
@@ -58,7 +80,32 @@ def audit(plan, base, stage='plan', readback=None):
                 fail('palette ' + key, 'colors must be #RRGGBB array')
             if not role.get('source') or not role.get('usage'):
                 fail('palette ' + key, 'needs source/usage')
-        # One hue is allowed; a count of hues cannot establish visual quality.
+        primary = roles.get('primary', {}).get('colors', []) if isinstance(roles.get('primary'), dict) else []
+        primary = [c.upper() for c in primary if hex_color(c)] if isinstance(primary, list) else []
+        secondary = palette.get('secondary_colors')
+        approved, status_only = set(), set()
+        if not isinstance(secondary, list):
+            fail('palette', 'secondary_colors must be an array, or []'); secondary = []
+        reference_paths = {r.get('path') for r in refs if isinstance(r, dict) and isinstance(r.get('path'), str)} if isinstance(refs, list) else set()
+        for entry in secondary:
+            if not isinstance(entry, dict) or not hex_color(entry.get('color')):
+                fail('palette secondary', 'needs a #RRGGBB color'); continue
+            color = entry['color'].upper(); kind = entry.get('source_kind')
+            if kind not in ('explicit', 'visual-reference', 'semantic') or not entry.get('source'):
+                fail('palette secondary ' + color, 'needs explicit/reference/semantic source evidence'); continue
+            if kind == 'visual-reference' and entry.get('source_ref') not in reference_paths:
+                fail('palette secondary ' + color, 'source_ref must match a designated palette reference'); continue
+            (status_only if kind == 'semantic' else approved).add(color)
+        for key in ('primary', 'background', 'text', 'accent'):
+            role = roles.get(key)
+            colors = role.get('colors', []) if isinstance(role, dict) else []
+            if not isinstance(colors, list): continue
+            for color in colors:
+                if not hex_color(color): continue
+                color = color.upper(); declared_native.add(color)
+                allowed = approved | (status_only if key in ('text', 'accent') else set())
+                if not neutral_or_primary(color, primary) and color not in allowed:
+                    fail('palette ' + key, 'unsupported secondary hue ' + color)
     actual_slides = {}
     if stage == 'delivery':
         if not isinstance(readback, dict) or not isinstance(readback.get('slides'), list):
@@ -86,6 +133,14 @@ def audit(plan, base, stage='plan', readback=None):
         by_id = {o.get('id'): o for o in objects if isinstance(o, dict)}
         if stage == 'delivery' and number not in actual_slides:
             fail(where, 'not present in final readback')
+        if stage == 'delivery':
+            native_colors = actual_slides.get(number, {}).get('native_colors')
+            if not isinstance(native_colors, list) or not native_colors or any(not hex_color(c) for c in native_colors):
+                fail(where, 'readback needs actual native_colors as a non-empty #RRGGBB array')
+            else:
+                for color in native_colors:
+                    if color.upper() not in declared_native:
+                        fail(where, 'actual native color outside declared palette: ' + color.upper())
         declared, ids = set(), set()
         for entry in entries:
             if not isinstance(entry, dict):
@@ -151,7 +206,7 @@ def audit(plan, base, stage='plan', readback=None):
             if isinstance(obj, dict) and obj.get('kind') == 'evidence' and obj.get('id') not in declared:
                 fail(where, 'unreviewed evidence object: ' + str(obj.get('id')))
     return {'errors': errors, 'warnings': warnings, 'stage': stage,
-            'limits': 'Provenance and insertion checks only; inspect final slide previews for color relationships, visible frame, crop and legibility.'}
+            'limits': 'Primary/secondary source and actual-color guards plus insertion checks only. Hue/near-neutral tolerance is geometric color grouping, not evidence that the source is truthful or the primary visually dominates. Inspect final previews for area hierarchy, harmony, frame, crop and legibility.'}
 
 
 def main():

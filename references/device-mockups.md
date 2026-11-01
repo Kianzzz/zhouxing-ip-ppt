@@ -42,7 +42,7 @@ python3 <本Skill>/scripts/audit_assets.py slide_plan.json --stage plan
 python3 <本Skill>/scripts/audit_assets.py slide_plan.json --stage delivery --objects readback-objects.json
 ```
 
-plan 阶段检查 palette_contract 与逐页证据处理是否完整；delivery 阶段还检查本地文件、placement来源/模板、实际插入对象及屏幕/框层几何和前后顺序。输入素材路径相对计划中的 asset_base（建议执行项目绝对路径；不写入通用 Skill），未指定时相对计划文件。readback-objects.json 是从最终稿回读并用上传映射还原的 `{ "slides": [{ "slide_no": 1, "objects": [{ "id": "实际对象ID", "type": "image", "file": "本地源文件", "bbox": [0,0,100,100], "layer_index": 0, "kind": "evidence" }] }] }`；不能拿提交前的拟用对象冒充回读。非证据对象可省略 kind。两层模式的 object_ids 按 screen、frame 顺序填写，files 使用 screen、frame、placement；合成模式用一个ID，files 使用 composite、placement。原图/已有框模式用 source 和实际 object_ids。
+plan 阶段检查 palette_contract 与逐页证据处理是否完整；delivery 阶段还检查本地文件、placement来源/模板、实际插入对象及屏幕/框层几何和前后顺序。输入素材路径相对计划中的 asset_base（建议执行项目绝对路径；不写入通用 Skill），未指定时相对计划文件。readback-objects.json 是从最终稿回读并用上传映射还原的 `{ "slides": [{ "slide_no": 1, "native_colors": ["#FFFFFF", "#1246F2"], "objects": [{ "id": "实际对象ID", "type": "image", "file": "本地源文件", "bbox": [0,0,100,100], "layer_index": 0, "kind": "evidence" }] }] }`；不能拿提交前的拟用对象冒充回读。非证据对象可省略 kind。两层模式的 object_ids 按 screen、frame 顺序填写，files 使用 screen、frame、placement；合成模式用一个ID，files 使用 composite、placement。原图/已有框模式用 source 和实际 object_ids。
 
 若来源清单中有证据图片而 evidence_images 为空，先补盘点；检查器只能识别被正确登记的素材，无法从图片像素自动判断截图。规则/文件检查不证明最终框可见或裁切合理，还要查看目标端截图。
 

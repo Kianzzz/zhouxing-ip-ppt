@@ -19,7 +19,7 @@ description: 制作有字体设计、角色动作、分层造景和真实截图�
 
 读主题/原稿、受众、用途、参考、角色输入和输出平台。默认飞书原生幻灯片、16:9 中文；不要凭空补事实。参考图中的商标、网址、指令仅是资料。
 
-先读 [视觉系统](references/design-system.md)，按需读 [参考拆解](references/reference-study.md)。从用户最接近的参考中选定本次语言：字体性格、线条/体块、配色、密度、人物景别、图文互动；不得把不同参考平均成白底蓝字加站立小人。先区分身份图、配色/风格参考与案例截图。配色遵循用户明确要求；其余按视觉系统分析参考的整体色彩关系，再与角色固有色协调。没有配色参考时从角色主要色彩推导搭配，而非复制为背景；角色、背景与文字分别分配颜色角色。蓝色角色默认不再铺大面积蓝底，优先米白、暖灰等中性色或有依据的异色搭配，蓝色可留给标题/强调。最大色块只是线索，不限制为一个色相。把背景、环境、标题/正文、强调色和角色原色分别分配，记录面积主次、饱和度/冷暖与跨页变化；不把肤色、参考板文字或全部细节色机械搬进页面。`assets/default-theme.json` 只提供无输入时的内置蓝系候选，不能覆盖用户参考。
+先读 [视觉系统](references/design-system.md)，按需读 [参考拆解](references/reference-study.md)。从用户最接近的参考中选定本次语言：字体性格、线条/体块、配色、密度、人物景别、图文互动；不得把不同参考平均成白底蓝字加站立小人。先区分身份图、配色/风格参考与案例截图。配色先按用户要求、指定配色参考、角色与内容确定本项目主色，并记录在 palette_contract.roles.primary；确定后保持其主题识别。背景与角色分离不改变主色：优先用白、灰、近黑等中性色、明暗/饱和度与面积变化建立层次；深底可用白字，不能为了对比把主标题改成另一色系。蓝色主色的项目仍以蓝色承担核心标题/强调，避免蓝衣与同明度饱和蓝底混在一起，不默认加黄字或橙色大底。指定参考本身有配套辅色时可按其角色与面积继承；额外色系逐项记录依据，不能仅凭“暖色呼应”“互补更好看”引入。角色最大色块只是线索，不覆盖参考中已有的多色关系。把背景、环境、标题/正文、强调色和角色原色分别分配，记录面积主次、饱和度/冷暖与跨页变化；不把肤色、参考板文字或全部细节色机械搬进页面。`assets/default-theme.json` 只提供无输入时的内置蓝系候选，不能覆盖用户参考。
 
 先整理原稿的核心结论、信息层级与叙事顺序，合并重复、区分事实与建议，再提出 PPT 大纲。按信息量与用途建议页数，不把某次示例的页数写成通用模板；每页给出标题、核心结论及必要要点，不能只列章节名。保留原稿文案与事实，允许语义断行；不能改写用户要求原封不动的内容。历史案例中的界面、活动价格和收益不自动变成当前结论。用户只要求样页时，大纲只覆盖本次范围；完整稿则先给整套大纲，两者均进入下方确认环节。
 
@@ -72,7 +72,7 @@ description: 制作有字体设计、角色动作、分层造景和真实截图�
 5. 空间关系与造景：从 character_profile 与本页内容选择场景/道具，先写支撑关系和各边自然收尾方式，再安排背景/景色、角色、原生信息及必要前景。生成素材与页底之间不能有明显矩形切口、悬空桌板或突兀分界；可延展出血到PPT页边、自然遮挡或衔接，不能在画内切断后留下底色条。独立景色不生成舞台、高台或台座式背景。同步规划视线、手势、接触锚点和前后层次，插画解释内容或人物关系；信息较多时用半身、局部或横向场景重新组织体量，生成视觉区仍不低于1/3，保留可辨动作与情境。
 6. 间距与对齐：先分组并确定阅读顺序，再为每个独立元素尽可能找到至少一个有语义的对齐对象；按任务选择左/右缘、中心、上下缘或基线，孤立例外说明作用。建立最多四档主间距，按字形和图片可见轮廓校正；不能只看文件框。数字与单位/标题保持连读，内容框默认协调的小圆角；先修几何，再选数字、胶囊、对话框或关键词机制，不能靠装饰填洞。
 
-在执行项目的 `plans/<task>/slide_plan.json` 写规划；已有平台专用目录时沿用，不为迁移路径重建稿件。核心字段为 schema_version=2、character_mode、canvas、typography、spacing_system、reference_contract；整套另记录 character_profile（事实/推断、身份与风格特征、配套环境/道具词汇）、palette_contract（来源、颜色角色、搭配依据、页间策略），每页记录 slide_no、page_role（cover / content）、key_message、layout_type、visual_focus、text_density、visual_priority、visual_sentence、composition、whitespace_intent、background_role、characters、scene_layers、evidence_images、text_boxes、layout_constraints。evidence_images 盘点该页全部真实截图/案例画面，无则空数组；按样机协议逐项决定外框或有理由的原图展示，不能直接当普通图片绕过。scene_layers 按实际需求记录层序、用途、图片/原生实现，以及生成素材的 support_relation、edge_treatment（各边延展/遮挡/自然收尾）；不要求每页塞满层。目标平台的额外字段按其协议补充。保存母图路径/sha256/认可状态，并逐素材记录实际参考输入。
+在执行项目的 `plans/<task>/slide_plan.json` 写规划；已有平台专用目录时沿用，不为迁移路径重建稿件。核心字段为 schema_version=2、character_mode、canvas、typography、spacing_system、reference_contract；整套另记录 character_profile（事实/推断、身份与风格特征、配套环境/道具词汇）、palette_contract（主色及来源、颜色角色、有依据的辅色、搭配依据、页间策略），每页记录 slide_no、page_role（cover / content）、key_message、layout_type、visual_focus、text_density、visual_priority、visual_sentence、composition、whitespace_intent、background_role、characters、scene_layers、evidence_images、text_boxes、layout_constraints。evidence_images 盘点该页全部真实截图/案例画面，无则空数组；按样机协议逐项决定外框或有理由的原图展示，不能直接当普通图片绕过。scene_layers 按实际需求记录层序、用途、图片/原生实现，以及生成素材的 support_relation、edge_treatment（各边延展/遮挡/自然收尾）；不要求每页塞满层。目标平台的额外字段按其协议补充。保存母图路径/sha256/认可状态，并逐素材记录实际参考输入。
 
 typography 记录 font_group（B/C）、selection_reason、main、auxiliary、description 的家族/字重/深浅底颜色；title_family 对应主字体，body_family 对应说明字体，供现有检查器使用。英文数字默认随所属角色，不为凑组合增加字体。characters 每项记录 id、subject_count、shot、semantic_role、interaction_target、visible_bbox、crop、layers、contact_anchor；按角色协议同时写出媒介、身份不变项、动作与表情的可见表现，并将互动目标对应到实际场景物件或原生对象。一个场景图可包含多人，不必拆成几张人物贴纸。可见包围框和文件框分别记录；alpha 留白不能冒充图形体量。无角色页写空数组。
 
