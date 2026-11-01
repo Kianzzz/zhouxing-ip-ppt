@@ -1,6 +1,6 @@
 {
   "name": "zhouxing-no-input-blue-fallback",
-  "selection_mode": "character-first",
+  "selection_mode": "reference-and-character-aware",
   "colors_role": "fallback-only",
   "colors": {
     "accent": "#1246F2",
@@ -18,17 +18,18 @@
     "origin": "AI-generated original cobalt-blue editorial illustration",
     "approval_status": "candidate"
   },
-  "scope": "Cobalt blue is only the built-in no-input 2D fallback, not a universal palette. Supplied characters drive the project colors unless explicitly overridden. Backgrounds may vary coherently by page role; authentic screenshots retain original colors.",
+  "scope": "Built-in blue is a no-input candidate only. Explicit instructions and supplied visual color relationships guide project colors; coordinate them with preserved character colors. Learn color roles, area hierarchy, saturation, temperature and page rhythm. Authentic screenshots retain original colors.",
   "selection_priority": [
-    "explicit user palette",
-    "largest visible chromatic color family of supplied character, excluding background, skin and neutrals",
-    "content and visual reference",
-    "built-in blue fallback for no supplied character or palette"
+    "explicit user color requirements",
+    "supplied visual-reference color relationships coordinated with character identity",
+    "major character color families when no color reference is supplied",
+    "content-derived palette",
+    "built-in blue fallback when no input establishes a palette"
   ],
   "palette_policy": {
-    "source": "one dominant chromatic family",
-    "native_colors": "dominant hue tonal scale plus neutral white/near-black/gray",
+    "source": "role-based palette derived from the designated reference or character; not restricted to one hue",
+    "native_colors": "assign background, environment, text and accent roles with controlled area and contrast",
     "preserve": "original character and screenshot colors",
-    "avoid": "promoting skin, outlines or small accessories into unrelated page colors"
+    "avoid": "copying identity-board annotations, skin or every minor detail color; forcing all new props to one hue"
   }
 }

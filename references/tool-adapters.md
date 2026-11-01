@@ -46,16 +46,18 @@ CLI 安装器负责其自身依赖与协议资源；优先使用已安装的 Nod
 - 角色/场景：使用当前 agent 支持实际参考图输入的生图能力，或用户已有匹配素材。缺少生图和素材时明确提示，不能假装生成。默认母图只用作画风参考，不能当作每页可复用的无关成品图。
 - 原生排版与预览：默认飞书工具与服务端截图；无需本地 PPTX 引擎或本地渲染器。飞书服务端暂不能截图时如实说明，回读与几何检查不能冒充目标端预览。
 - 对齐、间距、越界与真实字形/alpha 轮廓：使用已有等效工具；使用本 Skill 检查器时再准备 Python 3 和 Node/@napi-rs/canvas。检查标准不因换工具而降低，无法测量的项目不能报为已通过。
-- 设备外框：资源已内置，无需联网找图或重画。需要本地套图时使用已有合成工具，或按需安装 canvas 后运行 compose_device_mockup.mjs。
+- 设备外框：资源已内置，无需联网找图或重画。先按样机协议逐项登记截图处理；需要本地套图时使用已有合成工具，或按需安装 canvas 后运行 compose_device_mockup.mjs。插入完整合成图，或一起插入屏幕/外框两层；交付回读确认，不能只做本地合成。
 - 字体：从当前工具和目标飞书实际可用的字体选择匹配组合；某个本地字体文件不兼容时换同类可用字体或采用目标端测量，不因一个 TTC 加载失败阻塞所有页面。
 
 ## 可选脚本依赖
 
-`validate_plan.py` 和 `audit_layout.py` 只使用 Python 标准库。两个 `.mjs` 入口通过 `canvas_runtime.mjs` 解析 @napi-rs/canvas：先尝试 Skill 附近和当前工作项目的 node_modules，再尝试可选环境变量 RUNTIME_NODE_MODULES。依赖准备按当前环境规则完成，无需向用户展示例行命令。
+`validate_plan.py`、`audit_layout.py` 和 `audit_assets.py` 只使用 Python 标准库。两个 `.mjs` 入口通过 `canvas_runtime.mjs` 解析 @napi-rs/canvas：先尝试 Skill 附近和当前工作项目的 node_modules，再尝试可选环境变量 RUNTIME_NODE_MODULES。依赖准备按当前环境规则完成，无需向用户展示例行命令。
 
 ```bash
 node <skill-root>/scripts/measure_layout.mjs objects.json measured.json
 python3 <skill-root>/scripts/audit_layout.py measured.json
+python3 <skill-root>/scripts/audit_assets.py slide_plan.json --stage plan
+python3 <skill-root>/scripts/audit_assets.py slide_plan.json --stage delivery --objects readback-objects.json
 node <skill-root>/scripts/compose_device_mockup.mjs --device iphone-14-pro-silver --input screenshot.png --output preview.png --layers-dir device-layers
 ```
 
