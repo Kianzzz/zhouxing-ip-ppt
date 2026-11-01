@@ -1,12 +1,12 @@
 {
-  "name": "zhouxing-no-input-green-fallback",
+  "name": "zhouxing-no-input-blue-fallback",
   "selection_mode": "character-first",
   "colors_role": "fallback-only",
   "colors": {
-    "accent": "#28A85B",
-    "accent_dark": "#16733D",
-    "accent_light": "#C8F2D5",
-    "accent_surface": "#F4FCF6",
+    "accent": "#1246F2",
+    "accent_dark": "#0C2C9C",
+    "accent_light": "#DCE6FF",
+    "accent_surface": "#F2F5FF",
     "background": "#FFFFFF",
     "title": "#151A23",
     "body": "#343B45",
@@ -14,16 +14,16 @@
   },
   "style_reference": {
     "path": "default-style-reference.png",
-    "sha256": "0db838f6721bde1ebef659cb812e1c393e10dc7fadcecb49273cd9e91ed59b5e",
-    "origin": "AI-generated editorial illustration; palette edited with the built-in image generation tool",
+    "sha256": "712c79e1e89920766e7b8ab0cb1f0a8ad674a706b62f80f8479613d03492cb4c",
+    "origin": "AI-generated original cobalt-blue editorial illustration",
     "approval_status": "candidate"
   },
-  "scope": "Green is only the built-in no-input 2D fallback, not a universal palette. Supplied characters drive the project colors unless explicitly overridden. Backgrounds may vary coherently by page role; authentic screenshots retain original colors.",
+  "scope": "Cobalt blue is only the built-in no-input 2D fallback, not a universal palette. Supplied characters drive the project colors unless explicitly overridden. Backgrounds may vary coherently by page role; authentic screenshots retain original colors.",
   "selection_priority": [
     "explicit user palette",
     "largest visible chromatic color family of supplied character, excluding background, skin and neutrals",
     "content and visual reference",
-    "built-in green fallback for no supplied character or palette"
+    "built-in blue fallback for no supplied character or palette"
   ],
   "palette_policy": {
     "source": "one dominant chromatic family",
