@@ -4,7 +4,7 @@
 
 | 资料 | 事实/边界 | 本 Skill 的设计应用（推断） |
 |---|---|---|
-| [Adobe 字体搭配课程](https://www.adobe.com/us/learn/express/web/font-pairing-guide) | 字体搭配参与情绪、个性和层级的表达 | 先分展示标题、阅读正文与英文数字角色，再选字形；不机械套宋黑 |
+| [Adobe 字体搭配课程](https://www.adobe.com/us/learn/express/web/font-pairing-guide) | 字体搭配参与情绪、个性和层级的表达 | 按主字体、辅字体、说明字体分工，英文数字随所属角色；结合角色气质选择 B/C 组，不机械套宋黑 |
 | [Adobe Spectrum 字体系统](https://spectrum.adobe.com/foundations/typography/typography-system) | 字号、字重与颜色共同建立信息/注意层级；该系统面向产品界面 | 借层级方法，不照搬界面字号到PPT；展示词与正文采用不同尺度 |
 | [Monotype 易读字体指南](https://www.monotype.com/resources/expertise/how-find-legible-fonts) | 过高笔画反差在小尺寸中可能丢失细笔画；展示与正文用途要区分 | 强烈展示字只用于短标题，正文优先稳定字形，按实际尺寸检查 |
 | [W3C 中文排版需求](https://www.w3.org/TR/clreq/) | 讨论中文标点禁则、中西混排与行布局；并非海报创意模板 | 中文按语义断行、复核标点与混排基线；不把英文任意拆词方法直接套给连续中文 |

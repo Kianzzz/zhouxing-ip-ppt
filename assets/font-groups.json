@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "selection_mode": "character-temperament-and-content",
+  "fallback_group": "B",
+  "roles": {
+    "main": "cover and page titles",
+    "auxiliary": "subtitles and group headings",
+    "description": "body copy, image captions and notes"
+  },
+  "shared_roles": {
+    "auxiliary": {
+      "family": "阿里巴巴普惠体 3.0",
+      "family_aliases": [
+        "Alibaba PuHuiTi 3.0"
+      ],
+      "style": "SemiBold",
+      "weight": 600,
+      "installed_filename_hint": "AlibabaPuHuiTi-3-75-SemiBold.ttf",
+      "face_names": [
+        "Alibaba PuHuiTi 3 75 SemiBold",
+        "AlibabaPuHuiTi_3_75_SemiBold"
+      ]
+    },
+    "description": {
+      "family": "阿里巴巴普惠体 3.0",
+      "family_aliases": [
+        "Alibaba PuHuiTi 3.0"
+      ],
+      "style": "Light",
+      "weight": 300,
+      "bold": false,
+      "color_on_light": "#454B54",
+      "color_on_dark": "#D9DDE3",
+      "installed_filename_hint": "AlibabaPuHuiTi-3-45-Light.otf",
+      "small_text_exception": "Improve backing, size and spacing first. If thin strokes remain unclear, use Regular 400 only on affected small text and record the reason.",
+      "face_names": [
+        "Alibaba PuHuiTi 3 45 Light",
+        "AlibabaPuHuiTi_3_45_Light"
+      ]
+    }
+  },
+  "groups": {
+    "B": {
+      "name": "书刊叙事",
+      "main": {
+        "family": "思源宋体",
+        "family_aliases": [
+          "Source Han Serif CN"
+        ],
+        "style": "Heavy",
+        "weight": 900,
+        "installed_filename_hint": "SourceHanSerifCN-Heavy-4.otf",
+        "face_names": [
+          "Source Han Serif CN Heavy",
+          "SourceHanSerifCN-Heavy"
+        ]
+      },
+      "character_signals": [
+        "沉静",
+        "知性",
+        "优雅",
+        "细腻",
+        "书卷气"
+      ],
+      "content_fit": [
+        "观点",
+        "知识",
+        "叙事"
+      ]
+    },
+    "C": {
+      "name": "创意表达",
+      "main": {
+        "family": "得意黑",
+        "family_aliases": [
+          "Smiley Sans"
+        ],
+        "style": "Oblique",
+        "weight": 400,
+        "installed_filename_hint": "SmileySans-Oblique-3.otf",
+        "face_names": [
+          "Smiley Sans Oblique",
+          "SmileySans-Oblique"
+        ]
+      },
+      "character_signals": [
+        "轻快",
+        "俏皮",
+        "外向",
+        "动势",
+        "夸张轮廓"
+      ],
+      "content_fit": [
+        "创意",
+        "互动",
+        "活泼表达"
+      ]
+    }
+  },
+  "selection_notes": "Use visible temperament, silhouette and acting cues, not gender, skin color, image hue or a rigid 2D/3D/photographic mapping. Keep one group across the deck. Explicit user choices take priority.",
+  "portability": "Names and weights are preferences, not proof of target-app availability. Verify actual faces and fallback in the target app. Font binaries are not bundled."
+}

@@ -9,7 +9,7 @@
     "accent_surface": "#F2F5FF",
     "background": "#FFFFFF",
     "title": "#151A23",
-    "body": "#343B45",
+    "body": "#454B54",
     "muted": "#667085"
   },
   "style_reference": {
@@ -31,5 +31,11 @@
     "native_colors": "assign background, environment, text and accent roles with controlled area and contrast",
     "preserve": "original character and screenshot colors",
     "avoid": "copying identity-board annotations, skin or every minor detail color; forcing all new props to one hue"
+  },
+  "typography": {
+    "font_groups": "font-groups.json",
+    "selection": "character-temperament-and-content",
+    "fallback_group": "B",
+    "description_role": "Light 300; use the group color for the actual light/dark backing"
   }
 }
