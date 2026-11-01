@@ -2,4 +2,4 @@ interface:
   brand_color: "#1246F2"
   display_name: "zhouxing-IP-PPT"
   short_description: "设计字体、角色动作和分层造景，制作可编辑的叙事幻灯片"
-  default_prompt: "使用 $zhouxing-ip-ppt，先整理我的原稿，给出逐页PPT大纲并展示拟用角色母图，供我确认或替换成自己的IP；得到大纲与角色方向确认后连续完成生图、原生排版、验证并交付可编辑飞书幻灯片。"
+  default_prompt: "使用 $zhouxing-ip-ppt，先整理我的原稿，给出逐页PPT大纲并展示拟用角色母图，供我确认或替换成自己的IP；大纲与角色确认后，长稿、新角色或新风格先做代表性可编辑样稿供我确认，再补齐整套；已认可风格的短稿或局部修改直接执行。"
