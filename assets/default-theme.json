@@ -44,7 +44,7 @@
   ],
   "palette_policy": {
     "source": "Lock the project primary from explicit instructions or the designated reference first. Preserve existing reference secondary colors rather than forcing one hue.",
-    "native_colors": "Record roles.primary and audit actual native background/text/fill/stroke colors against the declared palette; retain primary recognition across pages.",
+    "native_colors": "Keep the project primary identifiable across pages. When a palette audit is requested, record and check actual native colors against the declared palette; ordinary production uses the selected reference and final previews.",
     "preserve": "original character and screenshot colors",
     "avoid": "copying identity-board annotations, skin or every minor detail color; forcing all new props to one hue",
     "background_selection": "Use neutral white/gray/near-black or a justified reference background to separate the character. Changing the backdrop does not change the primary color. Do not add warm complementary hues merely to distinguish blue clothing.",

@@ -30,7 +30,7 @@ def neutral_or_primary(color, primary):
 
 
 def audit(plan, base, stage='plan', readback=None):
-    errors, warnings = [], []
+    errors, warnings, unchecked = [], [], []
     def fail(where, message):
         errors.append(f'{where}: {message}')
     def local(value):
@@ -50,8 +50,10 @@ def audit(plan, base, stage='plan', readback=None):
         return {'errors': ['plan must be an object'], 'warnings': []}
     palette = plan.get('palette_contract')
     declared_native = set()
-    if not isinstance(palette, dict):
-        fail('palette', 'missing palette_contract')
+    if 'palette_contract' not in plan:
+        unchecked.append('palette: no palette_contract supplied')
+    elif not isinstance(palette, dict):
+        fail('palette', 'palette_contract must be an object')
     else:
         if palette.get('source_kind') not in ('explicit', 'visual-reference', 'character-derived', 'content-derived', 'fallback'):
             fail('palette', 'unknown source_kind')
@@ -125,7 +127,9 @@ def audit(plan, base, stage='plan', readback=None):
         if not isinstance(slide, dict):
             fail('slide', 'must be object'); continue
         number = slide.get('slide_no'); where = f'slide {number}'
-        entries = slide.get('evidence_images')
+        entries = slide.get('evidence_images', [])
+        if 'evidence_images' not in slide:
+            unchecked.append(where + ': evidence inventory not supplied')
         if not isinstance(entries, list):
             fail(where, 'evidence_images must inventory screenshots/case images, or be []'); entries = []
         objects = actual_slides.get(number, {}).get('objects', [])
@@ -133,7 +137,7 @@ def audit(plan, base, stage='plan', readback=None):
         by_id = {o.get('id'): o for o in objects if isinstance(o, dict)}
         if stage == 'delivery' and number not in actual_slides:
             fail(where, 'not present in final readback')
-        if stage == 'delivery':
+        if stage == 'delivery' and isinstance(palette, dict):
             native_colors = actual_slides.get(number, {}).get('native_colors')
             if not isinstance(native_colors, list) or not native_colors or any(not hex_color(c) for c in native_colors):
                 fail(where, 'readback needs actual native_colors as a non-empty #RRGGBB array')
@@ -205,7 +209,7 @@ def audit(plan, base, stage='plan', readback=None):
         for obj in objects:
             if isinstance(obj, dict) and obj.get('kind') == 'evidence' and obj.get('id') not in declared:
                 fail(where, 'unreviewed evidence object: ' + str(obj.get('id')))
-    return {'errors': errors, 'warnings': warnings, 'stage': stage,
+    return {'errors': errors, 'warnings': warnings, 'unchecked': unchecked, 'stage': stage,
             'limits': 'Primary/secondary source and actual-color guards plus insertion checks only. Hue/near-neutral tolerance is geometric color grouping, not evidence that the source is truthful or the primary visually dominates. Inspect final previews for area hierarchy, harmony, frame, crop and legibility.'}
 
 

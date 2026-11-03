@@ -18,13 +18,15 @@ def union_area(rects):
 def audit(doc):
     errors=[];warnings=[];measurements=[]
     tokens=doc.get('spacing_system',{})
-    if not isinstance(tokens,dict) or not tokens:
-        errors.append('Use a declared spacing system with at most four primary values')
+    if not isinstance(tokens,dict):
+        errors.append('spacing_system must be an object when supplied')
         return {'errors':errors,'warnings':warnings,'measurements':measurements}
     if any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or v<=0 for v in tokens.values()):
         return {'errors':['Spacing tokens must be positive finite numbers'],'warnings':[],'measurements':[]}
-    if len(set(tokens.values()))>4:
-        return {'errors':['Use at most four primary spacing values'],'warnings':[],'measurements':[]}
+    canvas=doc.get('canvas',{'width':960,'height':540})
+    if not isinstance(canvas,dict) or any(isinstance(canvas.get(k),bool) or not isinstance(canvas.get(k),(int,float)) or not math.isfinite(canvas[k]) or canvas[k]<=0 for k in ('width','height')):
+        return {'errors':['canvas needs positive finite width/height'],'warnings':[],'measurements':[]}
+    width,height=canvas['width'],canvas['height']
     slides=doc.get('slides',[])
     if not isinstance(slides,list) or not slides:
         return {'errors':['No slides to audit'],'warnings':[],'measurements':[]}
@@ -66,6 +68,8 @@ def audit(doc):
                     else:ok=c['min']<=value<=c['max']
                 elif kind=='generated_visual_coverage':
                     if basis!='ink':raise ValueError('generated coverage requires measured ink bounds')
+                    minimum=c.get('min_ratio')
+                    if isinstance(minimum,bool) or not isinstance(minimum,(int,float)) or not math.isfinite(minimum) or not 0<=minimum<=1:raise ValueError('coverage requires an explicit min_ratio between 0 and 1')
                     ids=c['ids']
                     if not isinstance(ids,list) or not ids or len(set(ids))!=len(ids):raise ValueError('list distinct generated image object IDs')
                     rects=[]
@@ -73,9 +77,9 @@ def audit(doc):
                         if oid not in objects or objects[oid].get('type')!='image':raise ValueError('coverage IDs must be actual image objects')
                         x,y,w,h=bound([oid],'ink')
                         if w<0 or h<0:raise ValueError('negative ink dimensions')
-                        left,top,right,bottom=max(0,x),max(0,y),min(960,x+w),min(540,y+h)
+                        left,top,right,bottom=max(0,x),max(0,y),min(width,x+w),min(height,y+h)
                         if right>left and bottom>top:rects.append((left,top,right,bottom))
-                    value=union_area(rects)/(960*540);ok=value+1e-12>=1/3
+                    value=union_area(rects)/(width*height);ok=value+1e-12>=minimum
                 else:raise ValueError('Unknown constraint kind')
                 item={'slide':si,'id':c.get('id'),'value':round(value,2),'basis':basis,'passed':ok};measurements.append(item)
                 if not ok:
